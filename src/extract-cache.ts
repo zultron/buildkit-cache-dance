@@ -51,6 +51,10 @@ export async function extractCaches(opts: Opts) {
         console.log("skip-extraction is set. Skipping extraction step...");
         return;
     }
+    if (!opts["save-always"] && core.getInput("job-status") !== "success") {
+      core.info('Skipping extraction:  job.status not "success"');
+      return;
+    }
 
     const cacheMap = await getCacheMap(opts);
     const scratchDir = opts['scratch-dir'];
