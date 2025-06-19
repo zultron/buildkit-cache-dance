@@ -1,3 +1,4 @@
+import * as core from '@actions/core'
 import { promises as fs } from 'fs';
 import path from 'path';
 import {CacheOptions, Opts, getCacheMap, getMountArgsString, getTargetPath, getBuilder} from './opts.js';
@@ -49,6 +50,10 @@ RUN --mount=${mountArgs} \
 export async function extractCaches(opts: Opts) {
     if (opts["skip-extraction"]) {
         console.log("skip-extraction is set. Skipping extraction step...");
+        return;
+    }
+    if (!opts["save-always"] && opts["job-status"] !== "success") {
+        console.log("Job status not 'success'. Skipping extraction step...");
         return;
     }
 

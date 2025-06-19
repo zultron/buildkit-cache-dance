@@ -9,6 +9,8 @@ export type Opts = {
   "dockerfile": string
   "scratch-dir": string
   "skip-extraction": boolean
+  "save-always": boolean
+  "job-status": string
   "utility-image": string
   "builder"?: string
   help: boolean
@@ -26,12 +28,14 @@ export function parseOpts(args: string[]): mri.Argv<Opts> {
       "scratch-dir": getInput("scratch-dir") || "scratch",
       "skip-extraction": (getInput("skip-extraction") || "false") === "true",
       "extract": process.env[`STATE_POST`] !== undefined,
+      "save-always": (getInput("save-always") || "false") === "true",
+      "job-status": getInput("job-status") || "undef",
       "utility-image": getInput("utility-image") || "ghcr.io/containerd/busybox:latest",
       "builder": getInput("builder") || "default",
       "help": false,
     },
-    string: ["cache-map", "dockerfile", "scratch-dir", "cache-source", "cache-target", "utility-image", "builder"],
-    boolean: ["skip-extraction", "help", "extract"],
+    string: ["cache-map", "dockerfile", "scratch-dir", "cache-source", "cache-target", "job-status", "utility-image", "builder"],
+    boolean: ["skip-extraction", "help", "extract", "save-always"],
     alias: {
       "help": ["h"],
     },

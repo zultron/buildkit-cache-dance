@@ -13,6 +13,8 @@ test('parseOpts with no arguments', () => {
         "extract": false,
         "h": false,
         "help": false,
+        "save-always": false,
+        "job-status": "undef",
         "utility-image": "ghcr.io/containerd/busybox:latest",
         "builder": "default"
     })
@@ -29,6 +31,8 @@ test('parseOpts with cache-map argument', () => {
         "extract": false,
         "h": false,
         "help": false,
+        "save-always": false,
+        "job-status": "undef",
         "utility-image": "ghcr.io/containerd/busybox:latest",
         "builder": "default"
     })
@@ -47,6 +51,8 @@ test('parseOpts with deprecated cache-source and cache-target arguments', () => 
         "help": false,
         "cache-source": 'source',
         "cache-target": 'target',
+        "save-always": false,
+        "job-status": "undef",
         "utility-image": "ghcr.io/containerd/busybox:latest",
         "builder": "default"
     })
@@ -63,6 +69,8 @@ test('parseOpts with utility-image argument', () => {
         "extract": false,
         "h": false,
         "help": false,
+        "save-always": false,
+        "job-status": "undef",
         "utility-image": "alpine:1",
         "builder": "default"
     })
@@ -79,6 +87,8 @@ test('parseOpts with builder argument', () => {
         "extract": false,
         "h": false,
         "help": false,
+        "save-always": false,
+        "job-status": "undef",
         "utility-image": "ghcr.io/containerd/busybox:latest",
         "builder": "another-builder"
     })
@@ -95,6 +105,8 @@ test('parseOpts with dockerfile argument', () => {
         "extract": false,
         "h": false,
         "help": false,
+        "save-always": false,
+        "job-status": "undef",
         "utility-image": "ghcr.io/containerd/busybox:latest",
         "builder": "default"
     })
@@ -111,6 +123,44 @@ test('parseOpts with help argument', () => {
         "extract": false,
         "h": true,
         "help": true,
+        "save-always": false,
+        "job-status": "undef",
+        "utility-image": "ghcr.io/containerd/busybox:latest",
+        "builder": "default"
+    })
+})
+
+test('parseOpts with save-always argument', () => {
+    const opts = parseOpts(['--save-always'])
+    expect(opts).toEqual({
+        "_": [],
+        "cache-map": "{}",
+        "dockerfile": "Dockerfile",
+        "scratch-dir": "scratch",
+        "skip-extraction": false,
+        "extract": false,
+        "h": false,
+        "help": false,
+        "save-always": true,
+        "job-status": "undef",
+        "utility-image": "ghcr.io/containerd/busybox:latest",
+        "builder": "default"
+    })
+})
+
+test('parseOpts with job-status argument', () => {
+    const opts = parseOpts(['--job-status', 'success'])
+    expect(opts).toEqual({
+        "_": [],
+        "cache-map": "{}",
+        "dockerfile": "Dockerfile",
+        "scratch-dir": "scratch",
+        "skip-extraction": false,
+        "extract": false,
+        "h": false,
+        "help": false,
+        "save-always": false,
+        "job-status": "success",
         "utility-image": "ghcr.io/containerd/busybox:latest",
         "builder": "default"
     })

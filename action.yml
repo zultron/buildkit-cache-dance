@@ -27,8 +27,10 @@ inputs:
   builder:
     default: default
     description: "The name of the builder. Default: 'default'"
+  job-status:
+    description: 'Workaround to pass job status to post job step. This variable is not intended for manual setting'
+    default: ${{ job.status }}
 runs:
   using: 'node20'
   main: 'dist/index.js'
   post: 'dist/index.js'
-  post-if: 'success() || github.event.inputs.save-always'
